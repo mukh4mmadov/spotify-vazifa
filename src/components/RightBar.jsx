@@ -3,7 +3,7 @@ import { FaPlus } from "react-icons/fa6";
 
 function RightBar() {
     return (
-        <div className="pt-7 px-5 bg-[#121212] h-full min-h-screen">
+        <div className="pt-7 px-5 bg-[#121212] h-full min-h-screen shadow-lg">
             <div className="flex items-center justify-between font-circular">
                 <h2 className="font-bold text-xl text-[#CCCCCC] bg-gradient-to-r from-indigo-300 to-purple-400 bg-clip-text text-transparent">
                     Friend Activity
@@ -22,9 +22,9 @@ function RightBar() {
                 ))}
             </div>
             <p className="mt-4 text-gray-400">
-                Go to Settings  Social and enable “Share my listening activity on Spotify.” You can turn this off at any time.
+                Go to Settings Social and enable “Share my listening activity on Spotify.” You can turn this off at any time.
             </p>
-            <button className="mt-4 w-full h-[62px] rounded-full bg-gradient-to-r from-green-400 to-green-600 text-white font-bold text-[18px] transition hover:opacity-90">
+            <button className="mt-4 w-full h-[62px] rounded-full bg-gradient-to-r from-green-400 to-green-600 text-white font-bold text-[18px] transition hover:opacity-90 shadow-lg">
                 SETTINGS
             </button>
         </div>

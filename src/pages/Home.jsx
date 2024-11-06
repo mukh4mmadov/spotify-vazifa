@@ -3,6 +3,8 @@ import http from "../axios";
 import { GrPrevious, GrNext } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
 
+const MAX_DISPLAY_ITEMS = 4;
+
 function Home() {
     const [playlists, setPlaylists] = useState({
         featured: [],
@@ -23,9 +25,9 @@ function Home() {
 
     const navigate = useNavigate();
     const handlePlaylistClick = (id) => navigate(`/details/${id}`);
-
     const toggleShowAll = (listName) => setShowAll((prev) => ({
-        ...prev, [listName]: !prev[listName]
+        ...prev,
+        [listName]: !prev[listName],
     }));
 
     const fetchPlaylists = async () => {
@@ -40,7 +42,7 @@ function Home() {
             ]);
 
             setPlaylists({
-                featured: responses[0].data.playlists.items.slice(0, 6),
+                featured: responses[0].data.playlists.items.slice(0, MAX_DISPLAY_ITEMS),
                 toplists: responses[1].data.playlists.items,
                 yourlists: responses[2].data.playlists.items,
                 recently: responses[3].data.playlists.items,
@@ -68,16 +70,16 @@ function Home() {
                 </button>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7 mt-7">
-                {items.slice(0, showAll[listName] ? items.length : 4).map((val, ind) => (
+                {items.slice(0, showAll[listName] ? items.length : MAX_DISPLAY_ITEMS).map((val, ind) => (
                     <div
                         key={ind}
                         onClick={() => handlePlaylistClick(val.id)}
-                        className="w-[224px] p-5 gap-5 bg-white bg-opacity-5 rounded-lg shadow-lg hover:bg-opacity-10 duration-200 cursor-pointer"
+                        className="w-[224px] p-5 gap-5 bg-white bg-opacity-5 rounded-lg shadow-lg hover:bg-opacity-10 transition duration-200 cursor-pointer"
                     >
                         <img
                             src={val.images[0]?.url}
                             className="w-[182px] h-[182px] rounded-lg object-cover"
-                            alt=""
+                            alt={val.name}
                         />
                         <h4 className="text-white font-circular font-bold text-[18px] mt-4">{val.name}</h4>
                         <p className="text-white font-circular mt-4">{val.description}</p>
@@ -91,23 +93,23 @@ function Home() {
         <div className="bg-gradient-to-b from-purple-800 to-black min-h-screen">
             <div className="p-7">
                 <div className="flex gap-4">
-                    <GrPrevious className="w-10 h-10 py-2 px-3 text-white bg-[#000] rounded-full" />
-                    <GrNext className="w-10 h-10 py-2 px-3 text-white bg-[#000] rounded-full" />
+                    <GrPrevious className="w-10 h-10 py-2 px-3 text-white bg-[#000] rounded-full cursor-pointer" />
+                    <GrNext className="w-10 h-10 py-2 px-3 text-white bg-[#000] rounded-full cursor-pointer" />
                 </div>
                 <h1 className="mt-7 text-white text-[39px] font-circular font-bold tracking-[1px]">
                     Good afternoon
                 </h1>
-                <div className="grid grid-cols-2 gap-7 mt-7">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7 mt-7">
                     {playlists.featured.map((value, index) => (
                         <div
                             key={index}
                             onClick={() => handlePlaylistClick(value.id)}
-                            className="flex items-center gap-5 bg-white bg-opacity-5 rounded-lg shadow-lg hover:bg-opacity-10 duration-200 cursor-pointer"
+                            className="flex items-center gap-5 bg-white bg-opacity-5 rounded-lg shadow-lg hover:bg-opacity-10 transition duration-200 cursor-pointer"
                         >
                             <img
                                 src={value.images[0]?.url}
-                                className="w-20 h-20 rounded-l-md"
-                                alt=""
+                                className="w-20 h-20 rounded-l-md object-cover"
+                                alt={value.name}
                             />
                             <h2 className="text-white font-circular font-bold text-[20px]">
                                 {value.name}
