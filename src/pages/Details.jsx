@@ -36,6 +36,18 @@ const Details = () => {
     fetchPlaylistData();
   }, [id]);
 
+  const handleLike = (track) => {
+    const likedSongs = JSON.parse(localStorage.getItem("likedSongs")) || [];
+
+    if (!likedSongs.find((song) => song.id === track.id)) {
+      likedSongs.push(track);
+      localStorage.setItem("likedSongs", JSON.stringify(likedSongs));
+      alert(`${track.name} qo'shiq "Liked Songs" ga qo'shildi!`);
+    } else {
+      alert(`${track.name} allaqachon "Liked Songs" da mavjud!`);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen bg-[#121212]">
@@ -133,6 +145,10 @@ const Details = () => {
                     .toString()
                     .padStart(2, "0")}
                 </span>
+                <FaRegHeart
+                  className="w-6 h-6 text-white cursor-pointer hover:text-[#FF4081]"
+                  onClick={() => handleLike(track.track)}
+                />
               </div>
             ))}
         </div>
